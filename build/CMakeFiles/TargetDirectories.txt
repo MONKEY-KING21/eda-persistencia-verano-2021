@@ -1,0 +1,3 @@
+C:/Users/HP/OneDrive/Documentos/eda 2021/persistence/build/CMakeFiles/persistence.dir
+C:/Users/HP/OneDrive/Documentos/eda 2021/persistence/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/HP/OneDrive/Documentos/eda 2021/persistence/build/CMakeFiles/ZERO_CHECK.dir
