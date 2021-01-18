@@ -2,26 +2,25 @@
 #ifndef SOURCE_PERSISTENCE_PARTIAL_DIRECTED_GRAPH_HPP_
 #define SOURCE_PERSISTENCE_PARTIAL_DIRECTED_GRAPH_HPP_
 #include <utility>
+#include "DirectedGraph.hpp"
 namespace ADE {
-    namespace Persistence {
+namespace Persistence {
 
-/*
-template<typename X,typename Y>
-class qwerty{
-public:
-    unsigned int versionn;
-    X* ptr,Y valorr,bool x,size_t i;
-    //constructor
-    qwerty(Y valor, int version){
-        valorr(valor);
-        versionn(version);
-        x(false);
-        ptr(NULL);}
-    qwerty(size_t a, X* ptr1, unsigned int version) {
-        ptr(ptr1);
-        versionn(version);
-        x(true);
-        i(a);} };*/
+template <typename Type>
+ class tabla_versiones
+ {
+ public:
+    typedef Type data_type;
+    int valor;
+    int version;
+    Node<Type> *ptr;
+
+    MyTable(int valor1, int version1) {
+        table = nullptr;
+        valor = valor1;
+        version = version1;
+    }
+ };
 
 template <typename Type>
 //para la clase partial node uso herencia de la clase node
@@ -35,17 +34,21 @@ class PartialNode:public Node<Type> {
   std::vector<qwerty<datatype>*>vector_De_mod;
   std::size_t current_modifications_size_;
   std::size_t current_back_pointer_size_;
+  tabla_Versiones<Type> *tabla_version;
   PartialNode** backward_;
   PartialNode() {}
   PartialNode(data_type const& data, std::size_t const& out_ptrs_size,
               std::size_t const& in_ptrs_size) {
     backward_ = new PartialNode<Type>*[in_ptrs_size]();}
-
+    
+  void New_table(int var, int ver){
+    tabla_version = new tabla_versiones<Type>(valor1,version1);
+  }
   data_type get_data(unsigned int version){
       return *Node<Type>::data_;
   }
   bool dar_puntero(PartialNode* puntero1, unisgned int x) {
-      Node<type>::forward_ = puntero1;
+      Node<type>::forward= puntero1;
       return true;
   }
 
@@ -81,12 +84,16 @@ class PartialDirectedGraph:public DirectedGraph<Type,Node> {
   bool add_edge(Node* u, Node* v, std::size_t position) {++(*current_version_);
     return true;}
  protected:
-  unsigned int* current_version_;
+  unsigned int current_version_;
   std::size_t in_ptrs_size_;
   Node* root_ptr_;
   std::size_t out_ptrs_size_;
-  Node* insertar(data_type const data, Node* u, std::size_t position, unsigned int version) {
-      return DirectedGraph<Type, Node>::insertar(data, u, position);
+ Node* insertar(data_type const data, Node* u, std::size_t position, unsigned int version) {
+      Node* insertar1 = DirectedGraph<Type, Node>::insertar(data, u, position);
+      insertar1->tabla_version(data, version);  			
+      Node* insertar2 = dynamic_cast<Node*>(u->forward[position]);
+      insertar1->tabla_version->ptr = u;
+      return insertar1;
   }
 };
 
